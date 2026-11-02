@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Simpanin - Unduh Video TikTok, Instagram, dan YouTube</title>
+  <meta name="description" content="Simpanin membantu menyimpan video dari TikTok, Instagram, dan YouTube. Tempel tautan, pilih format, selesai.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="lewati" href="#utama">Lewati ke konten utama</a>
+
+  <header class="topbar">
+    <div class="wadah topbar-isi">
+      <a class="logo" href="beranda.html" aria-label="Simpanin, ke halaman sapaan">
+        <svg class="logo-ikon" viewBox="0 0 32 32" aria-hidden="true">
+          <rect width="32" height="32" rx="9" fill="currentColor"/>
+          <path d="M16 7v12m0 0-5-5m5 5 5-5M9 24h14" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="logo-teks">Simpanin</span>
+      </a>
+
+      <button class="btn-menu" id="btn-menu" type="button" aria-expanded="false" aria-controls="menu-nav">
+        <span class="sr-only">Buka menu</span>
+        <span class="garis"></span><span class="garis"></span><span class="garis"></span>
+      </button>
+
+      <nav class="menu" id="menu-nav" aria-label="Navigasi utama">
+        <a href="beranda.html" aria-current="page">Beranda</a>
+        <a href="beranda.html#cara-pakai">Cara Pakai</a>
+        <a href="beranda.html#fitur">Fitur</a>
+        <a href="beranda.html#faq">FAQ</a>
+
+        <!-- Menu akun: ikon profil kosong (belum login) atau "Halo, GN" (sudah login) -->
+        <div class="akun" id="akun">
+          <button type="button" class="btn-profil" id="btn-profil" aria-haspopup="true" aria-expanded="false" aria-controls="menu-akun" aria-label="Menu akun" title="Menu akun">
+            <span class="avatar-kosong" data-hanya="tamu" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="4" fill="currentColor"/><path d="M4 21c0-4.2 3.6-7 8-7s8 2.8 8 7z" fill="currentColor"/></svg>
+            </span>
+            <span class="profil-teks" data-hanya="masuk" hidden>Halo, <strong id="nama-akun"></strong></span>
+            <svg class="panah" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+
+          <ul class="menu-akun" id="menu-akun" hidden>
+            <li class="menu-akun-kepala" data-hanya="masuk" hidden>
+              <strong id="akun-nama-penuh"></strong>
+              <span id="akun-email"></span>
+            </li>
+            <li data-hanya="masuk" hidden><a href="riwayat.html">Riwayat</a></li>
+            <li><a href="lapor.html">Lapor Konten</a></li>
+            <li class="pemisah" data-hanya="tamu" role="separator"></li>
+            <li data-hanya="tamu"><button type="button" data-buka-akun="masuk">Masuk</button></li>
+            <li data-hanya="tamu"><button type="button" data-buka-akun="daftar">Daftar</button></li>
+            <li class="pemisah" data-hanya="masuk" role="separator" hidden></li>
+            <li data-hanya="masuk" hidden><button type="button" id="btn-keluar">Keluar</button></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="utama">
+    <section class="hero" id="beranda">
+      <div class="wadah hero-isi">
+        <h1>Simpan video favoritmu, <span class="sorot">tinggal tempel tautan.</span></h1>
+        <p class="hero-deskripsi">Mendukung TikTok, Instagram, dan YouTube. Tanpa instal aplikasi.</p>
+
+        <form class="form-unduh" id="form-unduh" novalidate>
+          <label class="sr-only" for="input-tautan">Tautan video</label>
+          <div class="kolom-input" id="kolom-input">
+            <input type="text" id="input-tautan" name="tautan" inputmode="url" autocomplete="off"
+                   placeholder="Tempel tautan video di sini" aria-describedby="pesan-error status">
+            <button type="button" class="btn-hapus" id="btn-hapus" aria-label="Hapus tautan" hidden>&times;</button>
+            <button type="button" class="btn-tempel" id="btn-tempel">Tempel</button>
+          </div>
+          <button type="submit" class="btn-utama" id="btn-unduh">
+            <span class="btn-label">Cari Video</span>
+            <span class="spinner" aria-hidden="true"></span>
+          </button>
+        </form>
+
+        <p class="pesan-error" id="pesan-error" role="alert" hidden></p>
+        <p class="status" id="status" role="status" aria-live="polite"></p>
+
+        <ul class="platform" aria-label="Platform yang didukung">
+          <li><span class="titik titik-tiktok"></span>TikTok</li>
+          <li><span class="titik titik-instagram"></span>Instagram</li>
+          <li><span class="titik titik-youtube"></span>YouTube</li>
+        </ul>
+
+        <p class="petunjuk-akun" data-hanya="tamu">
+          Login bersifat opsional. <button type="button" class="tautan-tombol" data-buka-akun="masuk">Masuk</button> atau
+          <button type="button" class="tautan-tombol" data-buka-akun="daftar">daftar</button> jika ingin menyimpan riwayat aktivitasmu.
+        </p>
+      </div>
+    </section>
+
+    <!-- HASIL -->
+    <section class="hasil" id="hasil" aria-labelledby="judul-hasil" hidden>
+      <div class="wadah">
+        <div class="kartu hasil-kartu">
+          <div class="thumb" id="thumb" aria-hidden="true">
+            <span class="thumb-platform" id="hasil-platform">Platform</span>
+            <svg viewBox="0 0 24 24" class="thumb-play"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+            <span class="thumb-durasi" id="hasil-durasi">0:00</span>
+          </div>
+
+          <div class="hasil-info">
+            <h2 id="judul-hasil">Video ditemukan</h2>
+            <p class="hasil-judul" id="hasil-judul"></p>
+            <p class="hasil-meta">Pembuat: <span id="hasil-pembuat"></span></p>
+            <p class="hasil-tautan" id="hasil-tautan"></p>
+            <p class="catatan">Data di atas adalah contoh (demo). Pada tahap UAS, informasi diambil dari video yang sebenarnya.</p>
+            <p class="petunjuk-riwayat" data-hanya="tamu">
+              Ingin pencarian dan unduhanmu tersimpan?
+              <button type="button" class="tautan-tombol" data-buka-akun="masuk">Masuk (opsional)</button>
+            </p>
+            <p class="petunjuk-riwayat petunjuk-ok" data-hanya="masuk" hidden>Pencarian ini tercatat di <a href="riwayat.html">riwayatmu</a>.</p>
+          </div>
+
+          <div class="hasil-opsi">
+            <h3>Pilih format</h3>
+            <ul class="daftar-opsi" id="daftar-opsi"></ul>
+            <button type="button" class="btn-sekunder" id="btn-ulang">Cari video lain</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TENTANG SIMPANIN -->
+    <section class="seksi tentang" id="tentang" aria-labelledby="judul-tentang">
+      <div class="wadah wadah-sempit">
+        <h2 id="judul-tentang">Tentang Simpanin</h2>
+        <p class="tentang-teks">
+          Simpanin adalah website untuk menyimpan video dari media sosial dengan cara yang sederhana. Banyak video bagus tidak punya tombol simpan, atau hasilnya memuat watermark. Simpanin dibuat agar prosesnya cepat, jelas, dan bisa dipakai langsung dari HP maupun komputer.
+        </p>
+
+        <ul class="tentang-daftar">
+          <li class="kartu">
+            <h3>Tanpa instal</h3>
+            <p>Buka di browser lalu langsung pakai. Login hanya untuk yang ingin riwayat aktivitasnya tersimpan.</p>
+          </li>
+          <li class="kartu">
+            <h3>Tiga platform</h3>
+            <p>Mendukung TikTok, Instagram, dan YouTube, dikenali otomatis dari tautan.</p>
+          </li>
+          <li class="kartu">
+            <h3>Pilihan jelas</h3>
+            <p>Resolusi, ukuran file, dan opsi audio MP3 ditampilkan sebelum menyimpan.</p>
+          </li>
+        </ul>
+
+        <p class="catatan tentang-catatan">
+          Gunakan hanya untuk konten milikmu atau yang sudah diizinkan pembuatnya. Simpanin tidak berafiliasi dengan TikTok, Instagram, atau YouTube.
+        </p>
+
+        <p class="pindah-tampilan">
+          <a class="tautan-riwayat" href="riwayat.html">Lihat riwayat aktivitas <span aria-hidden="true">&rarr;</span></a>
+        </p>
+      </div>
+    </section>
+
+    <!-- CARA PAKAI -->
+    <section class="seksi" id="cara-pakai" aria-labelledby="judul-cara">
+      <div class="wadah">
+        <h2 id="judul-cara">Cara pakai</h2>
+        <ol class="langkah">
+          <li class="kartu">
+            <span class="nomor">1</span>
+            <h3>Salin tautan</h3>
+            <p>Buka video di TikTok, Instagram, atau YouTube, lalu pilih Bagikan &rarr; Salin tautan.</p>
+          </li>
+          <li class="kartu">
+            <span class="nomor">2</span>
+            <h3>Tempel di Simpanin</h3>
+            <p>Tempel tautan pada kolom di atas lalu tekan Cari Video. Platform dikenali otomatis.</p>
+          </li>
+          <li class="kartu">
+            <span class="nomor">3</span>
+            <h3>Pilih dan simpan</h3>
+            <p>Pilih format dan kualitas yang kamu mau, lalu simpan ke perangkatmu.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- FITUR -->
+    <section class="seksi seksi-warna" id="fitur" aria-labelledby="judul-fitur">
+      <div class="wadah">
+        <h2 id="judul-fitur">Kenapa Simpanin</h2>
+        <div class="grid-fitur">
+          <article class="kartu fitur">
+            <h3>Tanpa instal</h3>
+            <p>Cukup buka di browser HP atau komputer.</p>
+          </article>
+          <article class="kartu fitur">
+            <h3>Pilihan format jelas</h3>
+            <p>Resolusi, ukuran file, dan ada tidaknya audio ditampilkan sebelum menyimpan.</p>
+          </article>
+          <article class="kartu fitur">
+            <h3>Opsi audio MP3</h3>
+            <p>Hanya butuh suaranya? Pilih MP3 langsung dari hasil pencarian.</p>
+          </article>
+          <article class="kartu fitur">
+            <h3>Pesan kesalahan yang jelas</h3>
+            <p>Kalau tautan bermasalah, kamu tahu penyebabnya dan apa yang harus dilakukan.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="seksi" id="faq" aria-labelledby="judul-faq">
+      <div class="wadah wadah-sempit">
+        <h2 id="judul-faq">Pertanyaan umum</h2>
+        <details class="faq">
+          <summary>Apakah Simpanin gratis?</summary>
+          <p>Ya, fitur utama gratis dan tidak memerlukan akun.</p>
+        </details>
+        <details class="faq">
+          <summary>Apakah saya harus login?</summary>
+          <p>Tidak. Semua fitur utama bisa dipakai tanpa akun. Login hanya untuk yang ingin riwayat pencarian dan unduhannya tersimpan.</p>
+        </details>
+        <details class="faq">
+          <summary>Platform apa saja yang didukung?</summary>
+          <p>TikTok, Instagram, dan YouTube. Platform lain mungkin ditambahkan nanti.</p>
+        </details>
+        <details class="faq">
+          <summary>Kenapa tautan saya ditolak?</summary>
+          <p>Tautan harus berasal dari TikTok, Instagram, atau YouTube dan mengarah ke sebuah video, bukan ke beranda atau profil. Video dari akun privat tidak dapat diproses.</p>
+        </details>
+        <details class="faq">
+          <summary>Apakah boleh menyimpan video siapa saja?</summary>
+          <p>Video dilindungi hak cipta. Gunakan Simpanin hanya untuk konten milikmu sendiri atau yang pembuatnya sudah mengizinkan. Syarat platform asal juga berlaku, dan pengguna bertanggung jawab atas penggunaannya.</p>
+        </details>
+        <details class="faq">
+          <summary>Apakah tombol unduh sudah berfungsi?</summary>
+          <p>Belum. Ini versi tahap UTS: tampilan, validasi tautan, dan alurnya sudah berjalan dengan data contoh. Proses unduhan sungguhan menyusul di tahap berikutnya.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wadah">
+      <p class="footer-nama">Simpanin</p>
+      <p>Simpanin tidak berafiliasi dengan TikTok, Instagram, atau YouTube. Nama dan merek tersebut milik pemiliknya masing-masing.</p>
+      <p>Gunakan hanya untuk konten milikmu atau yang sudah mendapat izin pembuatnya. Pengguna bertanggung jawab atas penggunaannya.</p>
+      <p class="footer-kecil">&copy; 2026 Simpanin. Dibuat oleh Gustam NS. Hak cipta dilindungi.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+  <script src="beranda.js" defer></script>
+</body>
+</html>

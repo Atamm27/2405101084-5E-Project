@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Riwayat - Simpanin</title>
+  <meta name="description" content="Riwayat pencarian dan unduhan di Simpanin untuk pengguna yang masuk.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="lewati" href="#utama">Lewati ke konten utama</a>
+
+  <header class="topbar">
+    <div class="wadah topbar-isi">
+      <a class="logo" href="beranda.html" aria-label="Simpanin, ke halaman sapaan">
+        <svg class="logo-ikon" viewBox="0 0 32 32" aria-hidden="true">
+          <rect width="32" height="32" rx="9" fill="currentColor"/>
+          <path d="M16 7v12m0 0-5-5m5 5 5-5M9 24h14" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="logo-teks">Simpanin</span>
+      </a>
+
+      <button class="btn-menu" id="btn-menu" type="button" aria-expanded="false" aria-controls="menu-nav">
+        <span class="sr-only">Buka menu</span>
+        <span class="garis"></span><span class="garis"></span><span class="garis"></span>
+      </button>
+
+      <nav class="menu" id="menu-nav" aria-label="Navigasi utama">
+        <a href="beranda.html">Beranda</a>
+        <a href="beranda.html#cara-pakai">Cara Pakai</a>
+        <a href="beranda.html#fitur">Fitur</a>
+        <a href="beranda.html#faq">FAQ</a>
+
+        <!-- Menu akun: ikon profil kosong (belum login) atau "Halo, GN" (sudah login) -->
+        <div class="akun" id="akun">
+          <button type="button" class="btn-profil" id="btn-profil" aria-haspopup="true" aria-expanded="false" aria-controls="menu-akun" aria-label="Menu akun" title="Menu akun">
+            <span class="avatar-kosong" data-hanya="tamu" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="4" fill="currentColor"/><path d="M4 21c0-4.2 3.6-7 8-7s8 2.8 8 7z" fill="currentColor"/></svg>
+            </span>
+            <span class="profil-teks" data-hanya="masuk" hidden>Halo, <strong id="nama-akun"></strong></span>
+            <svg class="panah" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+
+          <ul class="menu-akun" id="menu-akun" hidden>
+            <li class="menu-akun-kepala" data-hanya="masuk" hidden>
+              <strong id="akun-nama-penuh"></strong>
+              <span id="akun-email"></span>
+            </li>
+            <li data-hanya="masuk" hidden><a href="riwayat.html" aria-current="page">Riwayat</a></li>
+            <li><a href="lapor.html">Lapor Konten</a></li>
+            <li class="pemisah" data-hanya="tamu" role="separator"></li>
+            <li data-hanya="tamu"><button type="button" data-buka-akun="masuk">Masuk</button></li>
+            <li data-hanya="tamu"><button type="button" data-buka-akun="daftar">Daftar</button></li>
+            <li class="pemisah" data-hanya="masuk" role="separator" hidden></li>
+            <li data-hanya="masuk" hidden><button type="button" id="btn-keluar">Keluar</button></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="utama">
+    <section class="seksi seksi-riwayat" id="riwayat" aria-labelledby="judul-riwayat">
+      <div class="wadah wadah-sempit">
+        <h1 class="judul-halaman" id="judul-riwayat">Riwayat aktivitas</h1>
+
+        <!-- Tampilan untuk pengunjung yang belum login -->
+        <div class="kartu riwayat-tamu" data-hanya="tamu">
+          <h2>Riwayatmu bisa tersimpan</h2>
+          <p>Kamu tidak wajib login untuk memakai Simpanin. Tetapi jika masuk, pencarian dan unduhanmu akan tercatat di sini sehingga mudah dicari lagi.</p>
+          <div class="aksi-baris">
+            <button type="button" class="btn-utama btn-kecil" data-buka-akun="masuk">Masuk</button>
+            <button type="button" class="btn-sekunder" data-buka-akun="daftar">Buat akun</button>
+          </div>
+        </div>
+
+        <!-- Tampilan untuk pengguna yang sudah login -->
+        <div class="riwayat-isi" id="riwayat-isi" data-hanya="masuk" hidden>
+          <div class="riwayat-kepala">
+            <p class="riwayat-ringkasan" id="riwayat-ringkasan"></p>
+            <button type="button" class="btn-bahaya" id="btn-hapus-semua" hidden>Hapus semua</button>
+          </div>
+
+          <div class="filter-baris" id="filter-riwayat" role="group" aria-label="Saring riwayat">
+            <button type="button" class="filter aktif" data-filter="semua" aria-pressed="true">Semua</button>
+            <button type="button" class="filter" data-filter="unduh" aria-pressed="false">Unduhan</button>
+            <button type="button" class="filter" data-filter="cari" aria-pressed="false">Pencarian</button>
+          </div>
+
+          <p class="riwayat-kosong" id="riwayat-kosong" hidden></p>
+          <ul class="daftar-riwayat" id="daftar-riwayat"></ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wadah">
+      <p class="footer-nama">Simpanin</p>
+      <p>Simpanin tidak berafiliasi dengan TikTok, Instagram, atau YouTube. Nama dan merek tersebut milik pemiliknya masing-masing.</p>
+      <p>Gunakan hanya untuk konten milikmu atau yang sudah mendapat izin pembuatnya. Pengguna bertanggung jawab atas penggunaannya.</p>
+      <p class="footer-kecil">&copy; 2026 Simpanin. Dibuat oleh Gustam NS. Hak cipta dilindungi.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+  <script src="riwayat.js" defer></script>
+</body>
+</html>

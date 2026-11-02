@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lapor Konten - Simpanin</title>
+  <meta name="description" content="Laporkan konten yang melanggar hak cipta atau privasi di Simpanin.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="lewati" href="#utama">Lewati ke konten utama</a>
+
+  <header class="topbar">
+    <div class="wadah topbar-isi">
+      <a class="logo" href="Landing%20Page/sapaan.html" aria-label="Simpanin, ke halaman sapaan">
+        <svg class="logo-ikon" viewBox="0 0 32 32" aria-hidden="true">
+          <rect width="32" height="32" rx="9" fill="currentColor"/>
+          <path d="M16 7v12m0 0-5-5m5 5 5-5M9 24h14" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="logo-teks">Simpanin</span>
+      </a>
+
+      <button class="btn-menu" id="btn-menu" type="button" aria-expanded="false" aria-controls="menu-nav">
+        <span class="sr-only">Buka menu</span>
+        <span class="garis"></span><span class="garis"></span><span class="garis"></span>
+      </button>
+
+      <nav class="menu" id="menu-nav" aria-label="Navigasi utama">
+        <a href="beranda.html">Beranda</a>
+        <a href="beranda.html#cara-pakai">Cara Pakai</a>
+        <a href="beranda.html#fitur">Fitur</a>
+        <a href="beranda.html#faq">FAQ</a>
+
+        <!-- Menu akun: ikon profil kosong (belum login) atau "Halo, GN" (sudah login) -->
+        <div class="akun" id="akun">
+          <button type="button" class="btn-profil" id="btn-profil" aria-haspopup="true" aria-expanded="false" aria-controls="menu-akun" aria-label="Menu akun" title="Menu akun">
+            <span class="avatar-kosong" data-hanya="tamu" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="4" fill="currentColor"/><path d="M4 21c0-4.2 3.6-7 8-7s8 2.8 8 7z" fill="currentColor"/></svg>
+            </span>
+            <span class="profil-teks" data-hanya="masuk" hidden>Halo, <strong id="nama-akun"></strong></span>
+            <svg class="panah" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+
+          <ul class="menu-akun" id="menu-akun" hidden>
+            <li class="menu-akun-kepala" data-hanya="masuk" hidden>
+              <strong id="akun-nama-penuh"></strong>
+              <span id="akun-email"></span>
+            </li>
+            <li data-hanya="masuk" hidden><a href="riwayat.html">Riwayat</a></li>
+            <li><a href="lapor.html" aria-current="page">Lapor Konten</a></li>
+            <li class="pemisah" data-hanya="tamu" role="separator"></li>
+            <li data-hanya="tamu"><button type="button" data-buka-akun="masuk">Masuk</button></li>
+            <li data-hanya="tamu"><button type="button" data-buka-akun="daftar">Daftar</button></li>
+            <li class="pemisah" data-hanya="masuk" role="separator" hidden></li>
+            <li data-hanya="masuk" hidden><button type="button" id="btn-keluar">Keluar</button></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="utama">
+    <section class="seksi" id="lapor" aria-labelledby="judul-lapor">
+      <div class="wadah wadah-sempit">
+        <h1 class="judul-halaman" id="judul-lapor">Lapor konten</h1>
+        <p class="pengantar">Pemilik hak cipta yang ingin konten mereka tidak dapat disimpan lewat Simpanin bisa mengirim permintaan di sini. Tidak perlu login.</p>
+
+        <form class="kartu form-lapor" id="form-lapor" novalidate>
+          <div class="field">
+            <label for="lap-nama">Nama</label>
+            <input type="text" id="lap-nama" name="nama" autocomplete="name">
+            <p class="field-error" id="err-lap-nama" hidden></p>
+          </div>
+
+          <div class="field">
+            <label for="lap-email">Email</label>
+            <input type="email" id="lap-email" name="email" autocomplete="email">
+            <p class="field-error" id="err-lap-email" hidden></p>
+          </div>
+
+          <p class="info-otomatis" id="lap-otomatis" hidden>Nama dan email diisi otomatis dari akunmu.</p>
+
+          <div class="field">
+            <label for="lap-tautan">Tautan konten yang dilaporkan</label>
+            <input type="text" id="lap-tautan" name="tautan" inputmode="url" placeholder="https://">
+            <p class="field-error" id="err-lap-tautan" hidden></p>
+          </div>
+
+          <div class="field">
+            <label for="lap-alasan">Alasan laporan</label>
+            <select id="lap-alasan" name="alasan">
+              <option value="">Pilih alasan</option>
+              <option value="hak-cipta">Pelanggaran hak cipta</option>
+              <option value="privasi">Pelanggaran privasi</option>
+              <option value="lainnya">Lainnya</option>
+            </select>
+            <p class="field-error" id="err-lap-alasan" hidden></p>
+          </div>
+
+          <div class="field">
+            <label for="lap-ket">Keterangan</label>
+            <textarea id="lap-ket" name="keterangan" rows="4" maxlength="500"></textarea>
+            <p class="field-bantu"><span id="hitung-ket">0</span>/500 karakter</p>
+            <p class="field-error" id="err-lap-ket" hidden></p>
+          </div>
+
+          <div class="field field-cek">
+            <input type="checkbox" id="lap-setuju" name="setuju">
+            <label for="lap-setuju">Saya menyatakan informasi di atas benar.</label>
+            <p class="field-error" id="err-lap-setuju" hidden></p>
+          </div>
+
+          <button type="submit" class="btn-utama">Kirim laporan</button>
+          <p class="sukses" id="lap-sukses" role="status" hidden></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wadah">
+      <p class="footer-nama">Simpanin</p>
+      <p>Simpanin tidak berafiliasi dengan TikTok, Instagram, atau YouTube. Nama dan merek tersebut milik pemiliknya masing-masing.</p>
+      <p>Gunakan hanya untuk konten milikmu atau yang sudah mendapat izin pembuatnya. Pengguna bertanggung jawab atas penggunaannya.</p>
+      <p class="footer-kecil">&copy; 2026 Simpanin. Dibuat oleh Gustam NS. Hak cipta dilindungi.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+  <script src="lapor.js" defer></script>
+</body>
+</html>
